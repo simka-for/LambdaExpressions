@@ -13,6 +13,10 @@ public class Main
     {
         ArrayList<Employee> staff = loadStaffFromFile();
 
+        GregorianCalendar calendar = new GregorianCalendar(2017,
+                Calendar.JANUARY, 0);
+        Date hireDay = calendar.getTime();
+
         staff.sort((o1, o2) -> {
             int result = -o1.getSalary().compareTo(o2.getSalary());
             if (result == 0){                                             // Если compare дает 0 ( результат одинаковый),
@@ -21,7 +25,11 @@ public class Main
                 return result;
             }
         });
-        staff.forEach(list -> System.out.println(list));
+        staff.forEach(System.out::println);
+
+        System.out.print("\n");
+
+        staff.stream().filter(d -> d.getWorkStart().after(hireDay)).max(Comparator.comparing(Employee::getSalary)).ifPresent(System.out::println);
     }
 
     private static ArrayList<Employee> loadStaffFromFile()
