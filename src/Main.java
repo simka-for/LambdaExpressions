@@ -49,9 +49,4 @@ public class Main
         }
         return staff;
     }
-    public void employeeSort(){
-        ArrayList<Employee> staff = new ArrayList<>();
-        staff.sort((o1, o2) -> o1.getSalary().compareTo(o2.getSalary()));
-        staff.forEach(list -> System.out.println(list));
-    }
 }
