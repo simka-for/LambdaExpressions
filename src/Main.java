@@ -1,9 +1,8 @@
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Stream;
+
 
 public class Main
 {
@@ -14,7 +13,15 @@ public class Main
     {
         ArrayList<Employee> staff = loadStaffFromFile();
 
-
+        staff.sort((o1, o2) -> {
+            int result = -o1.getSalary().compareTo(o2.getSalary());
+            if (result == 0){                                             // Если compare дает 0 ( результат одинаковый),
+                return o1.getName().compareTo(o2.getName());              // тогда делаем сравнение по имени
+            } else {                                                      // Иначе продолжаем сравнение по зарплате
+                return result;
+            }
+        });
+        staff.forEach(list -> System.out.println(list));
     }
 
     private static ArrayList<Employee> loadStaffFromFile()
@@ -41,5 +48,10 @@ public class Main
             ex.printStackTrace();
         }
         return staff;
+    }
+    public void employeeSort(){
+        ArrayList<Employee> staff = new ArrayList<>();
+        staff.sort((o1, o2) -> o1.getSalary().compareTo(o2.getSalary()));
+        staff.forEach(list -> System.out.println(list));
     }
 }
