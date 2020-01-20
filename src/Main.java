@@ -17,19 +17,26 @@ public class Main
                 Calendar.JANUARY, 0);
         Date hireDay = calendar.getTime();
 
-        staff.sort((o1, o2) -> {
-            int result = -o1.getSalary().compareTo(o2.getSalary());
-            if (result == 0){                                             // Если compare дает 0 ( результат одинаковый),
-                return o1.getName().compareTo(o2.getName());              // тогда делаем сравнение по имени
-            } else {                                                      // Иначе продолжаем сравнение по зарплате
-                return result;
-            }
-        });
+        Comparator<Employee> comp = Comparator.comparing(Employee::getSalary).thenComparing(Employee::getName);
+        Collections.sort(staff, comp);
+
+//        staff.sort((o1, o2) -> {
+//            int result = -o1.getSalary().compareTo(o2.getSalary());
+//            if (result == 0){
+//                return o1.getName().compareTo(o2.getName());
+//            } else {
+//                return result;
+//            }
+//        });
+
         staff.forEach(System.out::println);
 
         System.out.print("\n");
 
-        staff.stream().filter(d -> d.getWorkStart().after(hireDay)).max(Comparator.comparing(Employee::getSalary)).ifPresent(System.out::println);
+        staff.stream().
+                filter(d -> d.getWorkStart().after(hireDay)).
+                max(Comparator.comparing(Employee::getSalary)).
+                ifPresent(System.out::println);
     }
 
     private static ArrayList<Employee> loadStaffFromFile()
